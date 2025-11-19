@@ -1,7 +1,29 @@
+import { useEffect, useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import Spline from '@splinetool/react-spline'
+
+let SplineComp = null
+try {
+  // Dynamically require to avoid SSR/build-time issues if module fails
+  // and only load when component is mounted
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  SplineComp = (await import('@splinetool/react-spline')).default
+} catch (e) {
+  // ignore; we'll show a graceful fallback
+}
 
 export default function Hero() {
+  const [mounted, setMounted] = useState(false)
+  const [splineError, setSplineError] = useState(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const prefersReducedMotion = useMemo(() => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  }, [])
+
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none [mask-image:linear-gradient(to_bottom,black,transparent_85%)]">
@@ -46,7 +68,20 @@ export default function Hero() {
           className="relative h-[420px] rounded-2xl overflow-hidden border border-brown/20 shadow-xl bg-gradient-to-br from-beige to-coffee-50"
         >
           <div className="absolute inset-0">
-            <Spline scene="https://prod.spline.design/Ks-3d-demo/scene.splinecode" />
+            {mounted && !prefersReducedMotion && SplineComp && !splineError ? (
+              <SplineComp
+                scene="https://prod.spline.design/Ks-3d-demo/scene.splinecode"
+                onLoad={() => setSplineError(null)}
+                onError={(e) => setSplineError(e?.message || 'Failed to load 3D scene')}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-beige">
+                <div className="text-center px-6">
+                  <p className="text-coffee-900 font-semibold">3D preview</p>
+                  <p className="text-sm text-coffee-800/70">{splineError ? 'Could not load the 3D scene. Showing a placeholder.' : 'Loading...'}</p>
+                </div>
+              </div>
+            )}
           </div>
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-beige/40 to-transparent"/>
         </motion.div>
