@@ -5,42 +5,30 @@
 @layer base {
   :root {
     --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-geist: 'Geist', system-ui, sans-serif;
-    --font-geist-mono: 'Geist Mono', monospace;
-    --font-mona: 'Mona Sans', system-ui, sans-serif;
-    --font-ibm-plex: 'IBM Plex Sans', system-ui, sans-serif;
-    --font-manrope: 'Manrope', system-ui, sans-serif;
   }
 
-  html {
-    font-family: var(--font-sans);
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
-
-  body {
-    @apply antialiased;
-  }
+  html { font-family: var(--font-sans); }
+  body { @apply antialiased bg-ivory; }
 }
 
-/* Custom utility classes for shadcn/ui patterns */
+/* Coffee theme */
 @layer utilities {
-  .animate-in {
-    animation-name: animateIn;
-    animation-duration: 350ms;
-    --tw-enter-opacity: initial;
-    --tw-enter-scale: initial;
-    --tw-enter-rotate: initial;
-    --tw-enter-translate-x: initial;
-    --tw-enter-translate-y: initial;
-  }
-
-  .animate-out {
-    animation-name: animateOut;
-    animation-duration: 350ms;
-    --tw-exit-opacity: initial;
-    --tw-exit-scale: initial;
-    --tw-exit-rotate: initial;
-    --tw-exit-translate-x: initial;
-    --tw-exit-translate-y: initial;
-  }
+  .bg-beige { background-color: #F2E9E1; }
+  .bg-ivory { background-color: #FFFBF6; }
+  .text-ivory { color: #FFFBF6; }
+  .bg-coffee-50 { background-color: #F6EFEA; }
+  .bg-coffee-100 { background-color: #EFE5DD; }
+  .bg-coffee-200 { background-color: #E6D8CC; }
+  .bg-coffee-400 { background-color: #9B6B43; }
+  .bg-coffee-600 { background-color: #6B4226; }
+  .bg-coffee-800 { background-color: #4B2E1F; }
+  .text-coffee-700 { color: #7A5133; }
+  .text-coffee-800 { color: #5A3A28; }
+  .text-coffee-800\/70 { color: rgb(90 58 40 / 0.7); }
+  .text-coffee-900 { color: #3A2316; }
+  .from-beige { --tw-gradient-from: #F2E9E1 var(--tw-gradient-from-position); --tw-gradient-to: rgb(242 233 225 / 0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+  .to-coffee-50 { --tw-gradient-to: #F6EFEA var(--tw-gradient-to-position); }
+  .to-coffee-200 { --tw-gradient-to: #E6D8CC var(--tw-gradient-to-position); }
+  .border-brown\/10 { border-color: rgb(120 72 40 / 0.1); }
+  .border-brown\/20 { border-color: rgb(120 72 40 / 0.2); }
 }
